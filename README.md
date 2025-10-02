@@ -1,5 +1,7 @@
 # Blood Donation System
 
+This is a Spring Boot project for managing blood donations.
+
 A comprehensive Spring Boot web application for managing blood donation operations with **role-based authentication** and **complete CRUD functionality**. Features include donor management, appointment scheduling, communication, coordination, and role-specific dashboards.
 
 ## Features
@@ -229,3 +231,7 @@ src/
 3. Use the navigation menu to access different features
 4. Try adding, editing, and deleting records
 5. Check the H2 console to verify data persistence
+=======
+# Blood-Donation-System
+Blood Donation System Where Donors register, manage Donors and Staff, Keeping track on Blood Stock real time managing entire blood donation process smooth and easy
+>>>>>>> d363ba6a57deadf5dcdda449cdf3918c464019ab
