@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporting & Tracking</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0fff0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #228b22;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+            margin-bottom: 20px;
+        }
+        label, select, input[type="submit"] {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+        input[type="submit"] {
+            background-color: #228b22;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #228b22;
+            color: white;
+        }
+        .report-section {
+            margin-top: 30px;
+        }
+        .nav-panel {
+            background-color: #228b22;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        .nav-panel ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-panel li {
+            margin: 0;
+        }
+        .nav-panel a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: block;
+        }
+        .nav-panel a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .nav-panel a.active {
+            background-color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .back-to-dashboard {
+            background-color: #6c757d;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .back-to-dashboard:hover {
+            background-color: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Reporting & Tracking</h1>
+        <a href="/receptionist/dashboard" class="back-to-dashboard">← Back to Dashboard</a>
+    </div>
+    
+    <!-- Navigation Panel -->
+    <nav class="nav-panel">
+        <ul>
+            <li><a href="/donor/register">Register New Donor</a></li>
+            <li><a href="/donors">Manage Donors</a></li>
+            <li><a href="/appointments">Appointments</a></li>
+            <li><a href="/communications">Communications</a></li>
+            <li><a href="/coordination">Coordination</a></li>
+            <li><a href="/reports" class="active">Reports</a></li>
+        </ul>
+    </nav>
+    
+    <h2>Generate Report</h2>
+    <form th:action="@{/reports/generate}" method="post">
+        <label for="report">Select Report Type:</label>
+        <select id="report" name="reportType" required>
+            <option value="">Select report type</option>
+            <option value="Donor Attendance">Donor Attendance</option>
+            <option value="Donation History">Donation History</option>
+            <option value="Feedback Summary">Feedback Summary</option>
+        </select>
+
+        <input type="submit" value="Generate Report">
+    </form>
+
+    <div th:if="${reportType}" class="report-section">
+        <h2 th:text="${reportType} + ' Report'">Report</h2>
+        
+        <!-- Donor Attendance Report -->
+        <div th:if="${reportType == 'Donor Attendance'}">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Donor Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="appointment : ${appointments}">
+                    <td th:text="${appointment.id}">ID</td>
+                    <td th:text="${appointment.donorName}">Donor Name</td>
+                    <td th:text="${appointment.date}">Date</td>
+                    <td th:text="${appointment.time}">Time</td>
+                    <td th:text="${appointment.status}">Status</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Donation History Report -->
+        <div th:if="${reportType == 'Donation History'}">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Blood Type</th>
+                    <th>Address</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="donor : ${donors}">
+                    <td th:text="${donor.id}">ID</td>
+                    <td th:text="${donor.name}">Name</td>
+                    <td th:text="${donor.email}">Email</td>
+                    <td th:text="${donor.phone}">Phone</td>
+                    <td th:text="${donor.bloodType}">Blood Type</td>
+                    <td th:text="${donor.address}">Address</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Feedback Summary Report -->
+        <div th:if="${reportType == 'Feedback Summary'}">
+            <p>Feedback summary report would be displayed here. This could include communication history, donor feedback, and satisfaction ratings.</p>
+        </div>
+    </div>
+</body>
+</html>

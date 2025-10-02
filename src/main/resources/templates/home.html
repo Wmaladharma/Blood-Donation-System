@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation System - Saving Lives Together</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-section {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .cta-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.6);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .features-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+            border-radius: 20px;
+        }
+        
+        .features-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .feature-description {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .quick-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        
+        .quick-links h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .quick-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .blood-drop {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="blood-drop">🩸</span>
+                Blood Donation System
+            </div>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="hero-section">
+            <h1 class="hero-title">
+                <span class="blood-drop">🩸</span> Saving Lives Together
+            </h1>
+            <p class="hero-subtitle">
+                Your Blood Donation Management System
+            </p>
+            <p class="hero-description">
+                Join our mission to save lives through organized blood donation. 
+                Whether you're a donor ready to give the gift of life or a healthcare professional 
+                managing donations, we're here to make the process seamless and impactful.
+            </p>
+            
+            <div class="cta-buttons">
+                <a href="/donor/register" class="cta-btn btn-primary">
+                    ❤️ Become a Donor
+                </a>
+                <a href="/login" class="cta-btn btn-secondary">
+                    👩‍⚕️ Staff Portal
+                </a>
+            </div>
+            
+            <div class="features-section">
+                <h2 class="features-title">Why Choose Our System?</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏥</div>
+                        <h3 class="feature-title">Professional Management</h3>
+                        <p class="feature-description">
+                            Complete donor management system with role-based access for healthcare professionals
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3 class="feature-title">Easy Scheduling</h3>
+                        <p class="feature-description">
+                            Streamlined appointment booking and management for donors and staff
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3 class="feature-title">Secure & Private</h3>
+                        <p class="feature-description">
+                            Your personal and medical information is protected with enterprise-grade security
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Comprehensive Reports</h3>
+                        <p class="feature-description">
+                            Detailed analytics and reporting for better blood bank management
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Lives Saved</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Active Donors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Healthcare Partners</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support Available</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-links">
+                <h3>Quick Access</h3>
+                <a href="/donors">View Donors</a>
+                <a href="/appointments">Appointments</a>
+                <a href="/register">Staff Registration</a>
+                <a href="/h2-console" target="_blank">Database Console</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

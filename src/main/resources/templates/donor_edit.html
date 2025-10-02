@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Donor</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        h1 {
+            color: #4b0082;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #bbb;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label, input, select, input[type="submit"] {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+        input[type="submit"] {
+            background-color: #4b0082;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #4b0082;
+            text-decoration: none;
+        }
+        .nav-panel {
+            background-color: #4b0082;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        .nav-panel ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-panel li {
+            margin: 0;
+        }
+        .nav-panel a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: block;
+        }
+        .nav-panel a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .nav-panel a.active {
+            background-color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .back-to-dashboard {
+            background-color: #6c757d;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .back-to-dashboard:hover {
+            background-color: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Edit Donor</h1>
+        <a href="/receptionist/dashboard" class="back-to-dashboard">← Back to Dashboard</a>
+    </div>
+    
+    <!-- Navigation Panel -->
+    <nav class="nav-panel">
+        <ul>
+            <li><a href="/donor/register">Register New Donor</a></li>
+            <li><a href="/donors" class="active">Manage Donors</a></li>
+            <li><a href="/appointments">Appointments</a></li>
+            <li><a href="/communications">Communications</a></li>
+            <li><a href="/coordination">Coordination</a></li>
+            <li><a href="/reports">Reports</a></li>
+        </ul>
+    </nav>
+    
+    <a href="/donors" class="back-link">← Back to Donors List</a>
+
+    <form th:action="@{/donors/update}" method="post">
+        <input type="hidden" th:name="id" th:value="${donor.id}">
+        
+        <label for="name">Donor Name:</label>
+        <input type="text" id="name" name="name" th:value="${donor.name}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${donor.email}" required>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" th:value="${donor.phone}" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" th:value="${donor.address}">
+
+        <label for="bloodType">Blood Type:</label>
+        <select id="bloodType" name="bloodType">
+            <option value="">Select Blood Type</option>
+            <option value="A+" th:selected="${donor.bloodType == 'A+'}">A+</option>
+            <option value="A-" th:selected="${donor.bloodType == 'A-'}">A-</option>
+            <option value="B+" th:selected="${donor.bloodType == 'B+'}">B+</option>
+            <option value="B-" th:selected="${donor.bloodType == 'B-'}">B-</option>
+            <option value="AB+" th:selected="${donor.bloodType == 'AB+'}">AB+</option>
+            <option value="AB-" th:selected="${donor.bloodType == 'AB-'}">AB-</option>
+            <option value="O+" th:selected="${donor.bloodType == 'O+'}">O+</option>
+            <option value="O-" th:selected="${donor.bloodType == 'O-'}">O-</option>
+        </select>
+
+        <input type="submit" value="Update Donor">
+    </form>
+</body>
+</html>
+
+
+
+
+

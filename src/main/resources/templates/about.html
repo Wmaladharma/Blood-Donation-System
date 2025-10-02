@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Blood Donation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero-section {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: #dc3545;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #dc3545;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .team-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .team-member {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .member-avatar {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .member-role {
+            color: #dc3545;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .member-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .features-grid,
+            .team-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span>🩸</span>
+                Blood Donation System
+            </a>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/login">Login</a>
+                <a href="/donor/register">Donate</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <div class="hero-section">
+                <h1 class="hero-title">About Our Mission</h1>
+                <p class="hero-subtitle">Connecting donors with those in need, saving lives one donation at a time</p>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">Our Story</h2>
+                <div class="section-content">
+                    <p>
+                        The Blood Donation System was born from a simple yet powerful vision: to create a seamless, 
+                        efficient, and compassionate platform that connects blood donors with healthcare facilities 
+                        and patients in need. Every day, thousands of people require blood transfusions due to 
+                        medical procedures, accidents, or chronic conditions.
+                    </p>
+                    <p>
+                        Our comprehensive management system streamlines the entire blood donation process, from 
+                        donor registration to appointment scheduling, ensuring that life-saving blood is available 
+                        when and where it's needed most. We believe that technology can bridge the gap between 
+                        generous donors and critical medical needs.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏥</div>
+                        <h3 class="feature-title">Professional Management</h3>
+                        <p class="feature-description">
+                            Complete donor management system with role-based access for healthcare professionals, 
+                            ensuring secure and efficient operations.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3 class="feature-title">Smart Scheduling</h3>
+                        <p class="feature-description">
+                            Intelligent appointment booking system that optimizes donation schedules and 
+                            reduces wait times for both donors and staff.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3 class="feature-title">Data Security</h3>
+                        <p class="feature-description">
+                            Enterprise-grade security measures protect sensitive medical and personal information 
+                            with full HIPAA compliance.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Analytics & Reports</h3>
+                        <p class="feature-description">
+                            Comprehensive reporting tools provide insights into donation patterns, inventory levels, 
+                            and operational efficiency.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3 class="feature-title">Communication Hub</h3>
+                        <p class="feature-description">
+                            Integrated messaging system keeps donors informed about appointments, eligibility, 
+                            and urgent donation needs.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3 class="feature-title">Multi-Platform Access</h3>
+                        <p class="feature-description">
+                            Responsive web design ensures seamless access across desktop, tablet, and mobile devices 
+                            for maximum convenience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">Our Team Roles</h2>
+                <div class="team-section">
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💼</div>
+                        <h3 class="member-name">System Administrator</h3>
+                        <p class="member-role">Complete System Oversight</p>
+                        <p class="member-description">
+                            Manages all system operations, user accounts, and ensures optimal performance 
+                            across all departments.
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💼</div>
+                        <h3 class="member-name">Receptionist</h3>
+                        <p class="member-role">Donor Relations</p>
+                        <p class="member-description">
+                            First point of contact for donors, managing registrations, appointments, 
+                            and providing excellent customer service.
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍⚕️</div>
+                        <h3 class="member-name">Medical Doctor</h3>
+                        <p class="member-role">Medical Oversight</p>
+                        <p class="member-description">
+                            Ensures medical safety standards, reviews donor eligibility, and oversees 
+                            the medical aspects of blood donation.
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍⚕️</div>
+                        <h3 class="member-name">Registered Nurse</h3>
+                        <p class="member-role">Clinical Care</p>
+                        <p class="member-description">
+                            Provides direct patient care during donation, conducts health screenings, 
+                            and ensures donor safety and comfort.
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">🏥</div>
+                        <h3 class="member-name">Blood Bank Manager</h3>
+                        <p class="member-role">Inventory Management</p>
+                        <p class="member-description">
+                            Oversees blood inventory, quality control, distribution logistics, 
+                            and maintains optimal stock levels.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">Join Our Mission</h2>
+                <div class="section-content">
+                    <p>
+                        Every blood donation has the potential to save up to three lives. By joining our community, 
+                        you become part of a network of heroes who make a real difference in their communities. 
+                        Whether you're a first-time donor or a regular contributor, your participation helps ensure 
+                        that life-saving blood is available for emergencies, surgeries, and ongoing medical treatments.
+                    </p>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="cta-buttons">
+                        <a href="/donor/register" class="cta-btn btn-primary">
+                            ❤️ Become a Donor
+                        </a>
+                        <a href="/login" class="cta-btn btn-secondary">
+                            👩‍⚕️ Staff Portal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

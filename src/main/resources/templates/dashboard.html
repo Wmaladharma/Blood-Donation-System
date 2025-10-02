@@ -1,0 +1,411 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard - Blood Donation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .navigation {
+            background: #023e8a;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links a:hover {
+            background: #90e0ef;
+            color: #023e8a;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .welcome-section {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .welcome-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #0077b6;
+        }
+        
+        .welcome-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .welcome-description {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0077b6;
+        }
+        
+        .action-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .action-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .action-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,119,182,0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .stats-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0077b6;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>📋 Receptionist Dashboard</h1>
+            <div class="user-info">
+                <span th:if="${currentUser}" th:text="'Welcome, ' + ${currentUser.fullName}">Welcome, Receptionist</span>
+                <a th:href="@{/logout}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="navigation">
+        <div class="nav-content">
+            <div class="nav-links">
+                <a th:href="@{/donor/register}">
+                    ➕ Register New Donor
+                </a>
+                <a th:href="@{/donors}">
+                    👥 Donor Profiles
+                </a>
+                <a th:href="@{/appointments}">
+                    📅 Appointment Management
+                </a>
+                <a th:href="@{/communications}">
+                    💬 Donor Communication
+                </a>
+                <a th:href="@{/coordination}">
+                    🔄 Coordination
+                </a>
+                <a th:href="@{/reports}">
+                    📊 Reporting & Tracking
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-icon">👋</div>
+            <h2 class="welcome-title">Welcome to Your Dashboard</h2>
+            <p class="welcome-subtitle">Receptionist Portal</p>
+            <p class="welcome-description">
+                As a receptionist, you're the first point of contact for our donors and the backbone of our operations. 
+                Use the tools below to manage donor registrations, schedule appointments, and coordinate with our medical team 
+                to ensure smooth blood donation processes.
+            </p>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card">
+                <div class="action-icon">➕</div>
+                <h3 class="action-title">Register New Donor</h3>
+                <p class="action-description">
+                    Help new donors join our life-saving mission by registering them in our system
+                </p>
+                <a th:href="@{/donor/register}" class="action-btn">Start Registration</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">👥</div>
+                <h3 class="action-title">Manage Donors</h3>
+                <p class="action-description">
+                    View, edit, and manage existing donor profiles and information
+                </p>
+                <a th:href="@{/donors}" class="action-btn">View Donors</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">📅</div>
+                <h3 class="action-title">Schedule Appointments</h3>
+                <p class="action-description">
+                    Book and manage blood donation appointments for our donors
+                </p>
+                <a th:href="@{/appointments}" class="action-btn">Manage Appointments</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">💬</div>
+                <h3 class="action-title">Communicate with Donors</h3>
+                <p class="action-description">
+                    Send important messages and updates to our donor community
+                </p>
+                <a th:href="@{/communications}" class="action-btn">Send Messages</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">🔄</div>
+                <h3 class="action-title">Coordinate with Staff</h3>
+                <p class="action-description">
+                    Share information and coordinate with medical staff members
+                </p>
+                <a th:href="@{/coordination}" class="action-btn">Coordinate</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">📊</div>
+                <h3 class="action-title">Generate Reports</h3>
+                <p class="action-description">
+                    Create reports and track donation activities and statistics
+                </p>
+                <a th:href="@{/reports}" class="action-btn">View Reports</a>
+            </div>
+        </div>
+        
+        <!-- Statistics Section -->
+        <div class="stats-section">
+            <h3 class="stats-title">Today's Overview</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">Registered Donors</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Scheduled Appointments</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Messages Sent</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Completed Tasks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

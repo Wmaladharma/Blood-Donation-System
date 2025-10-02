@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Blood Donation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .error-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        .error-animation {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .help-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+        
+        .help-title {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .help-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .help-link {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .help-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .help-link-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .help-link-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .help-link-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .error-animation {
+                font-size: 6rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .help-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-animation">🩸</div>
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-message">
+            Oops! The page you're looking for seems to have wandered off. 
+            Don't worry, we'll help you find your way back to saving lives.
+        </p>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn btn-primary">🏠 Go Home</a>
+            <a href="javascript:history.back()" class="btn btn-secondary">← Go Back</a>
+        </div>
+        
+        <div class="help-section">
+            <h3 class="help-title">Where would you like to go?</h3>
+            <div class="help-links">
+                <a href="/donor/register" class="help-link">
+                    <div class="help-link-icon">❤️</div>
+                    <div class="help-link-title">Become a Donor</div>
+                    <div class="help-link-desc">Register to donate blood</div>
+                </a>
+                
+                <a href="/login" class="help-link">
+                    <div class="help-link-icon">👩‍⚕️</div>
+                    <div class="help-link-title">Staff Login</div>
+                    <div class="help-link-desc">Access staff portal</div>
+                </a>
+                
+                <a href="/appointments" class="help-link">
+                    <div class="help-link-icon">📅</div>
+                    <div class="help-link-title">Appointments</div>
+                    <div class="help-link-desc">View appointments</div>
+                </a>
+                
+                <a href="/donors" class="help-link">
+                    <div class="help-link-icon">👥</div>
+                    <div class="help-link-title">Donor List</div>
+                    <div class="help-link-desc">Browse donors</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
